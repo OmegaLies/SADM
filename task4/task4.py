@@ -9,11 +9,11 @@ def task(csvString):
   # в словарь, где ключ - номер вершины, которая имеет ребра,
   # а значение - массив нормеров вершин, в которые эти ребра приходят
   f = StringIO(csvString)
-  reader = csv.reader(f, delimiter=',')
+  reader = csv.reader(f)
   graph = {}
   vertices = []
   for row in reader:
-    edge = list(map(int, row[0].split(';')))
+    edge = list(map(int, row))
     edge.sort()
     # Добавляем отношение в граф
     if edge[0] in graph:
@@ -26,10 +26,10 @@ def task(csvString):
       vertices.append(edge[0])
     if not edge[1] in vertices:
       vertices.append(edge[1])
-  
+
   # Создаем результирующий массив
   out = [[0 for i in range(5)] for i in range(len(vertices))]
-  
+
 
   # Заполняем количество r1 - прямого управления - для каждой вершины
   for i in graph:
@@ -47,7 +47,7 @@ def task(csvString):
         r2.append(j)
   r2.sort()
 
-  # Заполняем количество r3 - опосредованное управление 
+  # Заполняем количество r3 - опосредованное управление
   # и r4 - опосредованное подчинение
   for i in r2:
     if i in graph.keys():
@@ -63,7 +63,7 @@ def task(csvString):
   for i in sorted(graph.keys(), reverse=True):
     for j in graph[i]:
       out[i - 1][2] += out[j - 1][2]
-            
+
 
   #Считаем энтропию
   sum = 0
