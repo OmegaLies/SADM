@@ -52,4 +52,5 @@ def task(string):
           break
         else:
           k0 = k
-    return k
+    k = [round(i, 3) for i in k]
+    return json.dumps(list(k))
